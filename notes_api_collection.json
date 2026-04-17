@@ -1,0 +1,251 @@
+{
+	"info": {
+		"_postman_id": "notes-api-collection",
+		"name": "Notes Management API",
+		"description": "Postman collection for testing the Notes Management REST API built with Node.js, Express, and MongoDB.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Note",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Team standup agenda\",\n  \"content\": \"Discuss sprint blockers and deployment plan\",\n  \"category\": \"work\",\n  \"isPinned\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bulk Create Notes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"notes\": [\n    { \"title\": \"Note one\",   \"content\": \"Content one\",   \"category\": \"work\"     },\n    { \"title\": \"Note two\",   \"content\": \"Content two\",   \"category\": \"study\"    },\n    { \"title\": \"Note three\", \"content\": \"Content three\", \"category\": \"personal\" }\n  ]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/notes/bulk",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"notes",
+						"bulk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Notes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Note By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/notes/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"notes",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "ENTER_NOTE_ID_HERE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Replace Note (PUT)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Completely new title\",\n  \"content\": \"Completely new content\",\n  \"category\": \"personal\",\n  \"isPinned\": false\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/notes/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"notes",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "ENTER_NOTE_ID_HERE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Note (PATCH)",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"isPinned\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/notes/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"notes",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "ENTER_NOTE_ID_HERE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Note",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/notes/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"notes",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "ENTER_NOTE_ID_HERE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bulk Delete Notes",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"ids\": [\n    \"ID_1\",\n    \"ID_2\"\n  ]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/notes/bulk",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"notes",
+						"bulk"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000/api/notes"
+		}
+	]
+}
