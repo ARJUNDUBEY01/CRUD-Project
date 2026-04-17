@@ -128,9 +128,64 @@ const getNoteById = async (req, res) => {
   }
 };
 
+// @desc    Replace a note completely
+// @route   PUT /api/notes/:id
+// @access  Public
+const replaceNote = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Note ID format",
+        data: {}
+      });
+    }
+
+    const { title, content, category, isPinned } = req.body;
+
+    // For PUT, we expect all fields. required fields must be present.
+    if (!title || !content) {
+      return res.status(400).json({
+        success: false,
+        message: "Title and content are required for full replacement",
+        data: {}
+      });
+    }
+
+    const note = await Note.findByIdAndUpdate(
+      id,
+      { title, content, category, isPinned },
+      { new: true, overwrite: true, runValidators: true }
+    );
+
+    if (!note) {
+      return res.status(404).json({
+        success: false,
+        message: "Note not found",
+        data: {}
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Note replaced successfully",
+      data: note
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      data: {}
+    });
+  }
+};
+
 module.exports = {
   createNote,
   bulkCreateNotes,
   getAllNotes,
-  getNoteById
+  getNoteById,
+  replaceNote
 };
