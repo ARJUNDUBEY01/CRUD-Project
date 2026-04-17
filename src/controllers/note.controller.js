@@ -67,7 +67,29 @@ const bulkCreateNotes = async (req, res) => {
   }
 };
 
+// @desc    Get all notes
+// @route   GET /api/notes
+// @access  Public
+const getAllNotes = async (req, res) => {
+  try {
+    const notes = await Note.find().sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      message: "Notes fetched successfully",
+      data: notes
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      data: []
+    });
+  }
+};
+
 module.exports = {
   createNote,
-  bulkCreateNotes
+  bulkCreateNotes,
+  getAllNotes
 };
