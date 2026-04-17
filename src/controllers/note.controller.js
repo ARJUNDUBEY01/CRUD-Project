@@ -272,6 +272,37 @@ const deleteNote = async (req, res) => {
   }
 };
 
+// @desc    Delete multiple notes
+// @route   DELETE /api/notes/bulk
+// @access  Public
+const bulkDeleteNotes = async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "IDs array is missing or empty",
+        data: null
+      });
+    }
+
+    const deleteResult = await Note.deleteMany({ _id: { $in: ids } });
+
+    res.status(200).json({
+      success: true,
+      message: `${deleteResult.deletedCount} notes deleted successfully`,
+      data: null
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+      data: null
+    });
+  }
+};
+
 module.exports = {
   createNote,
   bulkCreateNotes,
@@ -279,5 +310,6 @@ module.exports = {
   getNoteById,
   replaceNote,
   updateNote,
-  deleteNote
+  deleteNote,
+  bulkDeleteNotes
 };
