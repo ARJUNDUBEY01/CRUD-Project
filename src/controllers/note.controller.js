@@ -36,6 +36,38 @@ const createNote = async (req, res) => {
   }
 };
 
+// @desc    Create multiple notes
+// @route   POST /api/notes/bulk
+// @access  Public
+const bulkCreateNotes = async (req, res) => {
+  try {
+    const { notes } = req.body;
+
+    if (!notes || !Array.isArray(notes) || notes.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Notes array is missing or empty",
+        data: []
+      });
+    }
+
+    const createdNotes = await Note.insertMany(notes);
+
+    res.status(201).json({
+      success: true,
+      message: `${createdNotes.length} notes created successfully`,
+      data: createdNotes
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+      data: []
+    });
+  }
+};
+
 module.exports = {
-  createNote
+  createNote,
+  bulkCreateNotes
 };
